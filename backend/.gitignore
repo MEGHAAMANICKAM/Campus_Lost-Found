@@ -1,4 +1,4 @@
 node_modules/
 .env
 *.env
-backend/src/uploads/*
+src/uploads/*
