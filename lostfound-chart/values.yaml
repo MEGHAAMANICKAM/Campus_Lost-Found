@@ -1,0 +1,36 @@
+frontend:
+  replicas: 1
+  image: meghaamanickam/lostfound-frontend:v1
+  containerPort: 80
+
+  serviceType: NodePort
+  servicePort: 80
+  targetPort: 80
+  nodePort: 30080
+
+backend:
+  replicas: 1
+  image: meghaamanickam/lostfound-backend:v1
+  containerPort: 5000
+
+  serviceType: ClusterIP
+  servicePort: 5000
+  targetPort: 5000
+
+config:
+  dbHost: mysql
+  dbName: lostfound_db
+  port: "5000"
+
+secret:
+  dbUser: root
+  dbPassword: rootpass
+
+mysql:
+  image: mysql:8.0
+  storage: 1Gi
+  rootPassword: rootpass
+  database: lostfound_db
+
+ingress:
+  host: lostfound.local
