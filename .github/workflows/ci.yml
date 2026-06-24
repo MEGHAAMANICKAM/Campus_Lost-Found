@@ -37,3 +37,21 @@ jobs:
       - name: Push Frontend Image
         run: |
           docker push meghaamanickam/lostfound-frontend:${IMAGE_TAG}
+
+      - name: Clone GitOps Repo
+        run: |
+          git clone https://${{ secrets.GITOPS_USERNAME }}:${{ secrets.GITOPS_TOKEN }}@github.com/MEGHAAMANICKAM/Campus_Lost-Found-GitOps.git
+
+      - name: Update Image Tags
+        run: |
+          sed -i "s|image: meghaamanickam/lostfound-frontend:.*|image: meghaamanickam/lostfound-frontend:${IMAGE_TAG}|g" Campus_Lost-Found-GitOps/lostfound-chart/values.yaml
+          sed -i "s|image: meghaamanickam/lostfound-backend:.*|image: meghaamanickam/lostfound-backend:${IMAGE_TAG}|g" Campus_Lost-Found-GitOps/lostfound-chart/values.yaml
+
+      - name: Commit and Push GitOps Changes
+        run: |
+          cd Campus_Lost-Found-GitOps
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Update image tag to ${IMAGE_TAG}" || exit 0
+          git push
