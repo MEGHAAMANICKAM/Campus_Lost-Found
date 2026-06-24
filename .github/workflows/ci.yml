@@ -13,6 +13,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set Image Tag
+        run: echo "IMAGE_TAG=${{ github.run_number }}" >> $GITHUB_ENV
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -21,16 +24,16 @@ jobs:
 
       - name: Build Backend Image
         run: |
-          docker build -t meghaamanickam/lostfound-backend:latest ./backend
+          docker build -t meghaamanickam/lostfound-backend:${IMAGE_TAG} ./backend
 
       - name: Push Backend Image
         run: |
-          docker push meghaamanickam/lostfound-backend:latest
+          docker push meghaamanickam/lostfound-backend:${IMAGE_TAG}
 
       - name: Build Frontend Image
         run: |
-          docker build -t meghaamanickam/lostfound-frontend:latest ./frontend
+          docker build -t meghaamanickam/lostfound-frontend:${IMAGE_TAG} ./frontend
 
       - name: Push Frontend Image
         run: |
-          docker push meghaamanickam/lostfound-frontend:latest
+          docker push meghaamanickam/lostfound-frontend:${IMAGE_TAG}
