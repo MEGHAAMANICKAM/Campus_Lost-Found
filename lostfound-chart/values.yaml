@@ -3,7 +3,7 @@ frontend:
   image: meghaamanickam/lostfound-frontend:v1
   containerPort: 80
 
-  serviceType: NodePort
+  serviceType: Nodeport
   servicePort: 80
   targetPort: 80
   nodePort: 30080
