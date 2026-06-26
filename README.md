@@ -1,97 +1,181 @@
-# Campus Lost & Found
+# 🎒 Campus Lost & Found System
 
-A simple 3-tier web app where students can post items they've **lost** or **found**
-on campus, browse open posts, and mark them as **claimed** once resolved.
-
----
-
-## Project spec (the "prompt")
-
-If you ever want to regenerate or extend this with an AI tool, here's the
-complete spec to give it:
-
-> Build a 3-tier "Campus Lost & Found" web application.
->
-> **Frontend:** React (Vite), with React Router. Three pages:
-> 1. Item List — shows all posts, filterable by Lost / Found / All. Each card
->    shows title, type badge, category, location, date, and (if open) buttons
->    to mark as claimed or delete.
-> 2. Add Item — a form to post a new lost or found item: type, title,
->    description, category, location, contact info.
-> 3. Item Detail — full view of a single item with the same actions.
->
-> All API calls go through axios to a `/api` base path.
->
-> **Backend:** Node.js + Express REST API with 5 routes under `/api/items`:
-> `GET /` (list, supports `?type=` and `?status=` filters), `GET /:id`,
-> `POST /`, `PUT /:id`, `DELETE /:id`. Plus a `GET /api/health` route.
-> Uses `mysql2` with a connection pool, config via environment variables.
->
-> **Database:** MySQL, single `items` table: id, type (enum lost/found),
-> title, description, category, location, contact_info,
-> status (enum open/claimed, default open), created_at.
+A full-stack web application that helps students report, search, and recover lost belongings within a campus. The application provides separate interfaces for reporting lost and found items while storing all information in a MySQL database.
 
 ---
 
-## Folder structure
+## 📌 Project Overview
 
+Managing lost and found items on campus can be difficult when information is shared through informal channels. This application provides a centralized platform where users can:
+
+- Report lost items
+- Report found items
+- View all reported items
+- Help owners recover their belongings
+
+---
+
+## ✨ Features
+
+- 📢 Report Lost Items
+- 📢 Report Found Items
+- 📋 View Lost Items
+- 📋 View Found Items
+- 🖼️ Upload Item Images
+- 📱 Responsive User Interface
+- 🔗 REST API Integration
+- 🗄️ MySQL Database
+
+---
+
+## 🏗️ Application Architecture
+
+```mermaid
+flowchart LR
+
+A["👤 User"]
+
+B["⚛️ React Frontend"]
+
+C["🟢 Express.js Backend"]
+
+D["🐬 MySQL Database"]
+
+A -->|"Uses"| B
+B -->|"HTTP Requests"| C
+C -->|"CRUD Operations"| D
 ```
-lostfound-app/
-├── backend/
-│   ├── src/
-│   │   ├── db.js              # MySQL connection pool
-│   │   ├── index.js           # Express app entrypoint
-│   │   └── routes/
-│   │       └── items.js       # All 5 REST routes
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React
+- HTML5
+- CSS3
+- JavaScript
+
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- MySQL 8
+
+### Containerization
+- Docker
+
+---
+
+## 📂 Project Structure
+
+```text
+lostfound-app
+│
+├── frontend
+│   ├── src
+│   ├── public
+│   └── package.json
+│
+├── backend
+│   ├── routes
+│   ├── controllers
+│   ├── config
 │   ├── package.json
-│   ├── .gitignore
-│   └── .env.example
-├── frontend/
-│   ├── src/
-│   │   ├── api/
-│   │   │   └── items.js       # All axios calls in one place
-│   │   ├── pages/
-│   │   │   ├── ItemList.jsx
-│   │   │   ├── AddItem.jsx
-│   │   │   └── ItemDetail.jsx
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js         # dev proxy: /api -> localhost:5000
-│   └── .gitignore
-├── db/
-│   └── schema.sql              # CREATE TABLE + sample rows
-├── .gitignore
+│   └── server.js
+│
+├── docker-compose.yml
+│
 └── README.md
 ```
 
 ---
 
-## Run it locally
+## ⚙️ Installation
 
-**1. Database**
+### Clone Repository
+
 ```bash
-mysql -u root -p < db/schema.sql
+git clone https://github.com/MEGHAAMANICKAM/lostfound-app.git
+cd lostfound-app
 ```
 
-**2. Backend**
+---
+
+### Backend
+
 ```bash
 cd backend
-cp .env.example .env     # edit DB_PASSWORD to match your MySQL setup
 npm install
-npm run dev
-# -> Lost & Found API running on port 5000
-curl http://localhost:5000/api/health   # {"status":"ok"}
+npm start
 ```
 
-**3. Frontend**
+---
+
+### Frontend
+
 ```bash
 cd frontend
 npm install
-npm run dev
-# -> open http://localhost:5173
+npm start
 ```
 
-That's it — browse, post, claim, and delete items at `http://localhost:5173`.
+---
+
+## 🐳 Docker
+
+Build Backend Image
+
+```bash
+docker build -t lostfound-backend ./backend
+```
+
+Build Frontend Image
+
+```bash
+docker build -t lostfound-frontend ./frontend
+```
+
+---
+
+## 📸 Screenshots
+
+### Home Page
+
+![Home](screenshots/home.png)
+
+---
+
+### Report Item
+
+![Report](screenshots/report.png)
+
+---
+
+### Lost Items
+
+![Lost](screenshots/lost-items.png)
+
+---
+
+### Found Items
+
+![Found](screenshots/found-items.png)
+
+---
+
+## 🚀 Future Enhancements
+
+- User Authentication
+- Email Notifications
+- Search & Filtering
+- Admin Dashboard
+- Cloud Image Storage
+- AI-based Item Matching
+
+---
+
+## 👩‍💻 Author
+
+**Meghaa Manickam**
